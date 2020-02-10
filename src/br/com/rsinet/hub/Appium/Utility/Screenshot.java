@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 
 import io.appium.java_client.android.AndroidDriver;
 
+// classe para identificar qual pasta sera saldo os prints
 public class Screenshot {
 
 	public static String capture(WebDriver driver, String screenShotName) throws IOException {

@@ -2,20 +2,31 @@ package br.com.rsinet.hub.Appium.TDD.Page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.android.AndroidDriver;
 
 public class PageLogin {
 
-	private WebDriver driver;
+	private AndroidDriver driver;
+	private WebElement element;
+	private TouchAction action;
 
-	public PageLogin(WebDriver driver) {
+	public PageLogin(AndroidDriver driver) {
 		this.driver = driver;
+		action = new TouchAction(driver);
 	}
-public void ElementoLogin() {
+
+	// Metodo que busca o elemento login para entrar para pagina de criar conta.
+	// metodo da direto o comando click.
+	public void ElementoLogin() {
 		driver.findElement(By.id("com.Advantage.aShopping:id/linearLayoutLogin")).click();
-	
-	//public void  botaoLogin() { driver.findElement(By.xpath("//android.support.v4.widget.DrawerLayout[@content-desc=\"Main Menu\"]/android.widget.FrameLayout/android.support.v7.widget.RecyclerView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]"));
-}
+
+	}
+
+// Metodo que busca o elemento criar conta para entrar para pagina de criar cadastro , o metodo da direto o comando click.
 	public void CriarConta() {
-			driver.findElement(By.id("com.Advantage.aShopping:id/textViewDontHaveAnAccount")).click();
+		driver.findElement(By.id("com.Advantage.aShopping:id/textViewDontHaveAnAccount")).click();
 	}
 }
