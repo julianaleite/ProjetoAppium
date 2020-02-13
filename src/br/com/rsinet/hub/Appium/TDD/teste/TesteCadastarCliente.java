@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -18,9 +19,6 @@ import br.com.rsinet.hub.Appium.Manager.DriverManager;
 import br.com.rsinet.hub.Appium.TDD.Page.CadastrarDadosCliente;
 import br.com.rsinet.hub.Appium.TDD.Page.HomePageCadastrar;
 import br.com.rsinet.hub.Appium.TDD.Page.PageLogin;
-import br.com.rsinet.hub.Appium.Utility.Reportes;
-import br.com.rsinet.hub.Appium.Utility.Screenshot;
-
 import br.com.rsinet.hub.Appium.Utility.*;
 import io.appium.java_client.android.AndroidDriver;
 
@@ -30,6 +28,7 @@ public class TesteCadastarCliente {
 	private HomePageCadastrar homepage;
 	private PageLogin logincliente;
 	private CadastrarDadosCliente cadastrarcliente;
+	private MassaDeDadosExcel massadados;
 
 //	Metodo que chama a classe Reportes e o metodo inicia reporte
 	@BeforeClass
@@ -48,7 +47,7 @@ public class TesteCadastarCliente {
 	ExtentTest test = Reportes.getTest();
 	ExtentReports extent = Reportes.getExtent();
 
-	//Metodo que chama todas a configuraçoes iniciais para efetuar os testes
+	// Metodo que chama todas a configuraçoes iniciais para efetuar os testes
 	@Before
 	public void IniciarTest() throws Exception {
 		driver = DriverManager.ConfiguraDriver();
@@ -56,6 +55,7 @@ public class TesteCadastarCliente {
 		homepage = new HomePageCadastrar(driver);
 		logincliente = new PageLogin(driver);
 		cadastrarcliente = new CadastrarDadosCliente(driver);
+		massadados = new MassaDeDadosExcel();
 
 	}
 
@@ -65,36 +65,30 @@ public class TesteCadastarCliente {
 
 		test = extent.startTest("Cadastro Valido");
 
-		String username = ExcelUtils.getCellData(1, 0);
-		String Email = ExcelUtils.getCellData(1, 1);
-		String senha = ExcelUtils.getCellData(1, 2);
-		String senhaConfirme = ExcelUtils.getCellData(1, 3);
-		String primeiroNome = ExcelUtils.getCellData(1, 4);
-		String ultimoNome = ExcelUtils.getCellData(1, 5);
-		String Telefone = ExcelUtils.getCellData(1, 6);
-		String Pais = ExcelUtils.getCellData(1, 7);
-		String Cidade = ExcelUtils.getCellData(1, 8);
-		String Endereço = ExcelUtils.getCellData(1, 9);
-		String Estado = ExcelUtils.getCellData(1, 10);
-		String Codigo = ExcelUtils.getCellData(1, 11);
-
 		homepage.ElementoInicializador();
 		logincliente.ElementoLogin();
 		logincliente.CriarConta();
-		cadastrarcliente.escreverNome(username);
-		cadastrarcliente.escreverEmail(Email);
-		cadastrarcliente.escreverSenha(senha);
-		cadastrarcliente.confirmarAsenha(senhaConfirme);
-		cadastrarcliente.escreverPrimeiroaNome(primeiroNome);
-		cadastrarcliente.escreverSegundoNome(ultimoNome);
-		cadastrarcliente.escreverTelefone(Telefone);
+		homepage.ElementoInicializador();
+		logincliente.ElementoLogin();
+		logincliente.CriarConta();
+		cadastrarcliente.escreverNome(massadados.userName());
+		cadastrarcliente.escreverEmail(massadados.email());
+		cadastrarcliente.escreverSenha(massadados.senha());
+		cadastrarcliente.confirmarAsenha(massadados.confirmaSenha());
+		cadastrarcliente.escreverPrimeiroaNome(massadados.primeiroNome());
+		cadastrarcliente.escreverSegundoNome(massadados.ultimoNome());
+		cadastrarcliente.escreverTelefone(massadados.telefone());
 		cadastrarcliente.clicaPais();
-		cadastrarcliente.escolhePais();
-		cadastrarcliente.escreverEstado(Estado);
-		cadastrarcliente.escreverEndereço(Endereço);
-		cadastrarcliente.escreverCidade(Cidade);
-		cadastrarcliente.escreverZip(Codigo);
+		cadastrarcliente.escolhePais(massadados.Pais());
+		cadastrarcliente.escreverEstado(massadados.Estado());
+		cadastrarcliente.escreverEndereço(massadados.Endereco());
+		cadastrarcliente.escreverCidade(massadados.Cidade());
+		cadastrarcliente.escreverZip(massadados.Codigo());
 		cadastrarcliente.registrarNome();
+		
+		Thread.sleep(5000);
+		String conta = driver.findElementById("com.Advantage.aShopping:id/textViewAdvantage").getText();
+		Assert.assertTrue(conta.contains("Create Account"));
 //ScreenShot
 		String screenShotPath = Screenshot.capture(driver, "Cadastro Valido");
 // reporte 
@@ -104,26 +98,29 @@ public class TesteCadastarCliente {
 
 //Metodo para caso de teste negatuivo cadastrar cliente 
 	@Test
-	public void TesteNegativoCadastro() throws IOException {
+	public void TesteNegativoCadastro() throws Exception {
 		test = extent.startTest("Cadastro Invalido");
 
 		homepage.ElementoInicializador();
 		logincliente.ElementoLogin();
 		logincliente.CriarConta();
-		cadastrarcliente.escreverNome("Juliana");
-		cadastrarcliente.escreverEmail("juliana.teste@teste.com.br");
-		cadastrarcliente.escreverSenha("12345");
-		cadastrarcliente.confirmarAsenha("12345");
-		cadastrarcliente.escreverPrimeiroaNome("Juliana");
-		cadastrarcliente.escreverSegundoNome("Silva");
-		cadastrarcliente.escreverTelefone("987654321");
+		cadastrarcliente.escreverNome(massadados.userName());
+		cadastrarcliente.escreverEmail(massadados.email());
+		cadastrarcliente.escreverSenha(massadados.senha());
+		cadastrarcliente.confirmarAsenha(massadados.confirmaSenha());
+		cadastrarcliente.escreverPrimeiroaNome(massadados.primeiroNome());
+		cadastrarcliente.escreverSegundoNome(massadados.ultimoNome());
+		cadastrarcliente.escreverTelefone(massadados.telefone());
 		cadastrarcliente.clicaPais();
-		cadastrarcliente.escolhePais();
-		cadastrarcliente.escreverEstado("SP");
-		cadastrarcliente.escreverEndereço("Rua teste automaçao");
-		cadastrarcliente.escreverCidade("Barueri");
-		cadastrarcliente.escreverZip("654321");
+		cadastrarcliente.escolhePais(massadados.Pais());
+		cadastrarcliente.escreverEstado(massadados.Estado());
+		cadastrarcliente.escreverEndereço(massadados.Endereco());
+		cadastrarcliente.escreverCidade(massadados.Cidade());
+		cadastrarcliente.escreverZip(massadados.Codigo());
 		cadastrarcliente.registrarNome();
+		
+		String registerv = driver.findElementById("com.Advantage.aShopping:id/buttonRegister").getText();
+		Assert.assertTrue(registerv.contains("REGISTER"));
 
 		String screenShotPath = Screenshot.capture(driver, "Cadastro Invalido");
 

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.testng.annotations.AfterClass;
@@ -41,6 +42,7 @@ public class TestePesquisaNaTelaPrincipal {
 
 	ExtentTest test = Reportes.getTest();
 	ExtentReports extent = Reportes.getExtent();
+
 // Metodos que busca as informaçoes para da inicio aos testes , com as configuraçoes nescessaroias
 	@Before
 	public void IniciarTeste() throws MalformedURLException {
@@ -48,11 +50,12 @@ public class TestePesquisaNaTelaPrincipal {
 		driver = DriverManager.ConfiguraDriver();
 		principal = new ProdutoTelaPrincipal(driver);
 	}
-	// Metodo para primeiro caso de teste da tela principal 
+
+	// Metodo para primeiro caso de teste da tela principal
 	@Test
 	public void TesteValidoTelaPrincipal() throws IOException {
 
-		test = extent.startTest("teste tela principal Valido");
+		test = extent.startTest("teste principal Valido");
 
 		principal.cliqueNoTablet();
 		principal.EscolhaOTablet();
@@ -60,13 +63,14 @@ public class TestePesquisaNaTelaPrincipal {
 		// ScreenShot
 		String screenShotPath = Screenshot.capture(driver, "tela principal Valido");
 		// reporte
-	test.log(LogStatus.PASS, "Funcionou: " + test.addScreenCapture(screenShotPath));
+		test.log(LogStatus.PASS, "Funcionou: " + test.addScreenCapture(screenShotPath));
 
 	}
+
 //Metodo caso de teste invalido da tela principal 
 	@Test
 	public void TesteInvalidoTelaPrincipal() throws IOException {
-	//	test = extent.startTest("tela principal Invalido");
+		// test = extent.startTest("tela principal Invalido");
 
 		principal.cliqueNoTablet();
 		principal.EscolhaOTablet();
@@ -81,12 +85,13 @@ public class TestePesquisaNaTelaPrincipal {
 		principal.digitarNome("juliana.teste@teste.com.br");
 		principal.digitarSenha("1213Ju");
 		principal.salvarLogin();
-		
-		
+
 		String screenShotPath = Screenshot.capture(driver, "tela principal Invalido");
 
-		//test.log(LogStatus.PASS, "Funcionou: " + test.addScreenCapture(screenShotPath));
+		// test.log(LogStatus.PASS, "Funcionou: " +
+		// test.addScreenCapture(screenShotPath));
 	}
+
 // Metodo para finalizar os testes
 	@After
 	public void FinalTest() {

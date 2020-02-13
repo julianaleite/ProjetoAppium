@@ -71,14 +71,16 @@ public class CadastrarDadosCliente {
 	private WebElement Country() {
 		return driver.findElement(By.xpath(
 				"//android.view.ViewGroup[@content-desc=\"Home Page\"]/android.widget.LinearLayout[2]/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout[3]/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout\r\n"));
-	
-		    }
-	
+
+	}
+
 //Metodo que busca o Elemento do campo digitar Estado
 	private WebElement ElementoEstado() {
-		return driver.findElement(By.xpath("//android.view.ViewGroup[@content-desc=\"Home Page\"]/android.widget.LinearLayout[2]/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout[3]/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.LinearLayout[2]/android.widget.RelativeLayout/android.widget.EditText\r\n" + 
-				""));
+		return driver.findElement(By.xpath(
+				"//android.view.ViewGroup[@content-desc=\"Home Page\"]/android.widget.LinearLayout[2]/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout[3]/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.LinearLayout[2]/android.widget.RelativeLayout/android.widget.EditText\r\n"
+						+ ""));
 	}
+
 //Metodo que busca o Elemento do campo digitar Cidade
 	private WebElement ElementoCidade() {
 		return driver.findElement(By.xpath(
@@ -107,7 +109,7 @@ public class CadastrarDadosCliente {
 	// Metodo que da o comando para o elemento nome
 	public void escreverNome(String nome) {
 		ElementoNome().sendKeys(nome);
-		
+
 	}
 
 //Metodo que da o comando para o elemento email
@@ -137,19 +139,20 @@ public class CadastrarDadosCliente {
 		ElementoSegundoNome().sendKeys(segundonome);
 		action.press(PointOption.point(941, 1412)).moveTo(PointOption.point(925, 420)).release().perform();
 
-		
 	}
 
 	// Metodo que da o comando para o elemento Telefone
 	public void escreverTelefone(String telegone) {
 		ElementoTelefone().sendKeys(telegone);
 	}
-	public void escolhePais() {
-        ((FindsByAndroidUIAutomator<WebElement>) driver).findElementByAndroidUIAutomator(
-                "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().textContains(\""
-                        + "Brazil" + "\").instance(0))")
-                .click();
+
+	public void escolhePais(String Brazil) {
+		((FindsByAndroidUIAutomator<WebElement>) driver).findElementByAndroidUIAutomator(
+				"new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().textContains(\""
+						+ "Brazil" + "\").instance(0))")
+				.click();
 	}
+
 	public void clicaPais() {
 		Country().click();
 	}
